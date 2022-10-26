@@ -100,9 +100,12 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
     reader,
     vaultPriceFeed,
     daiPriceFeed,
+    bnbPriceFeed,
+    ethPriceFeed,
     btcPriceFeed,
     fastPriceEvents,
     fastPriceFeed,
+    yieldTracker0
   }
 }
 

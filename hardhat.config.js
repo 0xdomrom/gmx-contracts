@@ -43,6 +43,13 @@ task("accounts", "Prints the list of accounts", async () => {
  */
 module.exports = {
   networks: {
+    local : {
+      url: 'http://127.0.0.1:8545/',
+      gasPrice: 30000000000,
+      // accounts: {
+      //   mnemonic: "test test test test test test test test test test test junk junk junk junk",
+      // },
+    },
     hardhat: {
       allowUnlimitedContractSize: true
     },
@@ -86,13 +93,6 @@ module.exports = {
       url: MAINNET_URL,
       gasPrice: 50000000000,
       accounts: [MAINNET_DEPLOY_KEY]
-    },
-    local : {
-      url: 'http://127.0.0.1:8545/',
-      gasPrice: 30000000000,
-      // accounts: {
-      //   mnemonic: "test test test test test test test test test test test junk junk junk junk",
-      // },
     }
   },
   etherscan: {
