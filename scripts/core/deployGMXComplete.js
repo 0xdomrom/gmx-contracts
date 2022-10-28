@@ -66,7 +66,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
   fastPriceFeed = await deployContract("FastPriceFeed", [
     5 * 60, // _priceDuration
     120 * 60, // _maxPriceUpdateDelay
-    2, // _minBlockInterval
+    0, // _minBlockInterval
     250, // _maxDeviationBasisPoints
     fastPriceEvents.address, // _fastPriceEvents
     tokenManager.address, // _tokenManager
