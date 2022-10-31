@@ -29,7 +29,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
 
   USDC = await deployContract("Token", [])
   USDCPriceFeed = await deployContract("PriceFeed", [])
-  await USDC.connect(minter).deposit({ value: expandDecimals(100, 18) })
+  // await USDC.connect(minter).deposit({ value: expandDecimals(100, 18) })
 
   btc = await deployContract("Token", [])
   btcPriceFeed = await deployContract("PriceFeed", [])
