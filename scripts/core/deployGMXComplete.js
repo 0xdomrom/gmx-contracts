@@ -41,7 +41,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
   timelock = await deployContract("Timelock", [
     wallet.address,
     5 * 24 * 60 * 60,
-    AddressZero,
+    wallet.address,
     tokenManager.address,
     mintReceiver.address,
     expandDecimals(1000, 18),
