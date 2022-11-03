@@ -72,6 +72,9 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
     tokenManager.address, // _tokenManager
     positionRouter.address // _positionRouter
   ])
+
+  // vault utils
+  vaultUtils = await deployContract("VaultUtils", [vault.address]);
  
   return {
     USDC, 
@@ -92,7 +95,8 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
     btcPriceFeed,
     fastPriceEvents,
     fastPriceFeed,
-    yieldTracker
+    yieldTracker,
+    vaultUtils
   }
 }
 
