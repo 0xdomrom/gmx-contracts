@@ -75,18 +75,18 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
 
   // vault utils
   vaultUtils = await deployContract("VaultUtils", [vault.address]);
- 
+
   return {
-    USDC, 
+    USDC,
     btc,
     eth,
-    vault, 
+    vault,
     timelock,
     usdg,
     router,
     shortsTracker,
     positionRouter,
-    referralStorage, 
+    referralStorage,
     distributor,
     reader,
     vaultPriceFeed,

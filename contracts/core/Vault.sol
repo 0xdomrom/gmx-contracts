@@ -257,12 +257,12 @@ contract Vault is ReentrancyGuard, IVault {
         isManager[_manager] = _isManager;
     }
 
-    function setInPrivateLiquidationMode(bool _inPrivateLiquidationMode) external {
+    function setInPrivateLiquidationMode(bool _inPrivateLiquidationMode) external override {
         _onlyGov();
         inPrivateLiquidationMode = _inPrivateLiquidationMode;
     }
 
-    function setLiquidator(address _liquidator, bool _isActive) external {
+    function setLiquidator(address _liquidator, bool _isActive) external override {
         _onlyGov();
         isLiquidator[_liquidator] = _isActive;
     }
@@ -292,13 +292,13 @@ contract Vault is ReentrancyGuard, IVault {
         priceFeed = _priceFeed;
     }
 
-    function setMaxLeverage(uint256 _maxLeverage) external {
+    function setMaxLeverage(uint256 _maxLeverage) external override {
         _onlyGov();
         _validate(_maxLeverage > MIN_LEVERAGE, 2);
         maxLeverage = _maxLeverage;
     }
 
-    function setBufferAmount(address _token, uint256 _amount) external {
+    function setBufferAmount(address _token, uint256 _amount) external override {
         _onlyGov();
         bufferAmounts[_token] = _amount;
     }
@@ -333,7 +333,7 @@ contract Vault is ReentrancyGuard, IVault {
         hasDynamicFees = _hasDynamicFees;
     }
 
-    function setFundingRate(uint256 _fundingInterval, uint256 _fundingRateFactor, uint256 _stableFundingRateFactor) external {
+    function setFundingRate(uint256 _fundingInterval, uint256 _fundingRateFactor, uint256 _stableFundingRateFactor) external override {
         _onlyGov();
         _validate(_fundingInterval >= MIN_FUNDING_RATE_INTERVAL, 10);
         _validate(_fundingRateFactor <= MAX_FUNDING_RATE_FACTOR, 11);
@@ -407,7 +407,7 @@ contract Vault is ReentrancyGuard, IVault {
         approvedRouters[msg.sender][_router] = false;
     }
 
-    function setUsdgAmount(address _token, uint256 _amount) external {
+    function setUsdgAmount(address _token, uint256 _amount) external override {
         _onlyGov();
 
         uint256 usdgAmount = usdgAmounts[_token];
@@ -688,7 +688,7 @@ contract Vault is ReentrancyGuard, IVault {
         return 0;
     }
 
-    function liquidatePosition(address _account, address _collateralToken, address _indexToken, bool _isLong, address _feeReceiver) external nonReentrant {
+    function liquidatePosition(address _account, address _collateralToken, address _indexToken, bool _isLong, address _feeReceiver) external nonReentrant override {
         if (inPrivateLiquidationMode) {
             _validate(isLiquidator[msg.sender], 34);
         }
@@ -1027,7 +1027,7 @@ contract Vault is ReentrancyGuard, IVault {
         return _feeBasisPoints.add(taxBps);
     }
 
-    function getTargetUsdgAmount(address _token) public view returns (uint256) {
+    function getTargetUsdgAmount(address _token) public view override returns (uint256) {
         uint256 supply = IERC20(usdg).totalSupply();
         if (supply == 0) { return 0; }
         uint256 weight = tokenWeights[_token];

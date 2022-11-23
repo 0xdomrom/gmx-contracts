@@ -22,6 +22,7 @@ interface IVault {
     function hasDynamicFees() external view returns (bool);
     function fundingInterval() external view returns (uint256);
     function totalTokenWeights() external view returns (uint256);
+    function getTargetUsdgAmount(address _token) external view returns (uint256);
 
     function inManagerMode() external view returns (bool);
     function inPrivateLiquidationMode() external view returns (bool);
@@ -36,11 +37,19 @@ interface IVault {
     function tokenBalances(address _token) external view returns (uint256);
     function lastFundingTimes(address _token) external view returns (uint256);
 
+    function setMaxLeverage(uint256 _maxLeverage) external;
     function setInManagerMode(bool _inManagerMode) external;
     function setManager(address _manager, bool _isManager) external;
     function setIsSwapEnabled(bool _isSwapEnabled) external;
     function setIsLeverageEnabled(bool _isLeverageEnabled) external;
     function setMaxGasPrice(uint256 _maxGasPrice) external;
+    function setUsdgAmount(address _token, uint256 _amount) external;
+    function setBufferAmount(address _token, uint256 _amount) external;
+//    function setMaxGlobalShortSize(address _token, uint256 _amount) external;
+    function setInPrivateLiquidationMode(bool _inPrivateLiquidationMode) external;
+    function setLiquidator(address _liquidator, bool _isActive) external;
+
+    function setFundingRate(uint256 _fundingInterval, uint256 _fundingRateFactor, uint256 _stableFundingRateFactor) external;
 
     function setFees(
         uint256 _taxBasisPoints,
@@ -73,6 +82,7 @@ interface IVault {
     function swap(address _tokenIn, address _tokenOut, address _receiver) external returns (uint256);
     function increasePosition(address _account, address _collateralToken, address _indexToken, uint256 _sizeDelta, bool _isLong) external;
     function decreasePosition(address _account, address _collateralToken, address _indexToken, uint256 _collateralDelta, uint256 _sizeDelta, bool _isLong, address _receiver) external returns (uint256);
+    function liquidatePosition(address _account, address _collateralToken, address _indexToken, bool _isLong, address _feeReceiver) external;
     function tokenToUsdMin(address _token, uint256 _tokenAmount) external view returns (uint256);
 
     function priceFeed() external view returns (address);
