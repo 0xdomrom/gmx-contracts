@@ -404,10 +404,10 @@ contract PositionRouter is BasePositionManager, IPositionRouter {
 
     function getRequestQueueLengths() external view returns (uint256, uint256, uint256, uint256) {
         return (
-            increasePositionRequestKeysStart,
-            increasePositionRequestKeys.length,
-            decreasePositionRequestKeysStart,
-            decreasePositionRequestKeys.length
+        increasePositionRequestKeysStart,
+        increasePositionRequestKeys.length,
+        decreasePositionRequestKeysStart,
+        decreasePositionRequestKeys.length
         );
     }
 
@@ -472,7 +472,7 @@ contract PositionRouter is BasePositionManager, IPositionRouter {
             IERC20(request.path[0]).safeTransfer(request.account, request.amountIn);
         }
 
-       _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
+        _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
 
         emit CancelIncreasePosition(
             request.account,
@@ -512,13 +512,13 @@ contract PositionRouter is BasePositionManager, IPositionRouter {
             }
 
             if (request.withdrawETH) {
-               _transferOutETHWithGasLimitIgnoreFail(amountOut, payable(request.receiver));
+                _transferOutETHWithGasLimitIgnoreFail(amountOut, payable(request.receiver));
             } else {
-               IERC20(request.path[request.path.length - 1]).safeTransfer(request.receiver, amountOut);
+                IERC20(request.path[request.path.length - 1]).safeTransfer(request.receiver, amountOut);
             }
         }
 
-       _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
+        _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
 
         emit ExecuteDecreasePosition(
             request.account,
@@ -550,7 +550,7 @@ contract PositionRouter is BasePositionManager, IPositionRouter {
 
         delete decreasePositionRequests[_key];
 
-       _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
+        _transferOutETHWithGasLimitIgnoreFail(request.executionFee, _executionFeeReceiver);
 
         emit CancelDecreasePosition(
             request.account,

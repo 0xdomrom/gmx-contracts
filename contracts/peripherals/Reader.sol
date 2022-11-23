@@ -22,11 +22,7 @@ contract Reader is Governable {
     uint256 public constant PRICE_PRECISION = 10 ** 30;
     uint256 public constant USDG_DECIMALS = 18;
 
-    bool public hasMaxGlobalShortSizes;
-
-    function setConfig(bool _hasMaxGlobalShortSizes) public onlyGov {
-        hasMaxGlobalShortSizes = _hasMaxGlobalShortSizes;
-    }
+    function setConfig(bool) public onlyGov {}
 
     function getMaxAmountIn(IVault _vault, address _tokenIn, address _tokenOut) public view returns (uint256) {
         uint256 priceIn = _vault.getMinPrice(_tokenIn);
@@ -340,7 +336,7 @@ contract Reader is Governable {
                 token = _weth;
             }
 
-            uint256 maxGlobalShortSize = hasMaxGlobalShortSizes ? vault.maxGlobalShortSizes(token) : 0;
+            uint256 maxGlobalShortSize = 0;
             amounts[i * propsLength] = vault.poolAmounts(token);
             amounts[i * propsLength + 1] = vault.reservedAmounts(token);
             amounts[i * propsLength + 2] = vault.usdgAmounts(token);
@@ -365,22 +361,22 @@ contract Reader is Governable {
 
         for (uint256 i = 0; i < _collateralTokens.length; i++) {
             {
-            (uint256 size,
-             uint256 collateral,
-             uint256 averagePrice,
-             uint256 entryFundingRate,
-             /* reserveAmount */,
-             uint256 realisedPnl,
-             bool hasRealisedProfit,
-             uint256 lastIncreasedTime) = IVault(_vault).getPosition(_account, _collateralTokens[i], _indexTokens[i], _isLong[i]);
+                (uint256 size,
+                uint256 collateral,
+                uint256 averagePrice,
+                uint256 entryFundingRate,
+                /* reserveAmount */,
+                uint256 realisedPnl,
+                bool hasRealisedProfit,
+                uint256 lastIncreasedTime) = IVault(_vault).getPosition(_account, _collateralTokens[i], _indexTokens[i], _isLong[i]);
 
-            amounts[i * POSITION_PROPS_LENGTH] = size;
-            amounts[i * POSITION_PROPS_LENGTH + 1] = collateral;
-            amounts[i * POSITION_PROPS_LENGTH + 2] = averagePrice;
-            amounts[i * POSITION_PROPS_LENGTH + 3] = entryFundingRate;
-            amounts[i * POSITION_PROPS_LENGTH + 4] = hasRealisedProfit ? 1 : 0;
-            amounts[i * POSITION_PROPS_LENGTH + 5] = realisedPnl;
-            amounts[i * POSITION_PROPS_LENGTH + 6] = lastIncreasedTime;
+                amounts[i * POSITION_PROPS_LENGTH] = size;
+                amounts[i * POSITION_PROPS_LENGTH + 1] = collateral;
+                amounts[i * POSITION_PROPS_LENGTH + 2] = averagePrice;
+                amounts[i * POSITION_PROPS_LENGTH + 3] = entryFundingRate;
+                amounts[i * POSITION_PROPS_LENGTH + 4] = hasRealisedProfit ? 1 : 0;
+                amounts[i * POSITION_PROPS_LENGTH + 5] = realisedPnl;
+                amounts[i * POSITION_PROPS_LENGTH + 6] = lastIncreasedTime;
             }
 
             uint256 size = amounts[i * POSITION_PROPS_LENGTH];

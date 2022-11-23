@@ -13,5 +13,7 @@ flattened
 distribution-data*.json
 **/.DS_Store
 
+artifacts/
+
 #Hardhat files
 cache

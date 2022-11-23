@@ -6,6 +6,6 @@ import "../Vault.sol";
 
 contract VaultTest is Vault {
     function increaseGlobalShortSize(address token, uint256 amount) external {
-        _increaseGlobalShortSize(token, amount);
+//        _increaseGlobalShortSize(token, amount);
     }
 }
