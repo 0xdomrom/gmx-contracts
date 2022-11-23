@@ -74,7 +74,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
   ])
 
   // vault utils
-  vaultUtils = await deployContract("VaultUtils", [vault.address]);
+  // vaultUtils = await deployContract("VaultUtils", [vault.address]);
 
   return {
     USDC,
@@ -96,7 +96,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
     fastPriceEvents,
     fastPriceFeed,
     yieldTracker,
-    vaultUtils
+    // vaultUtils
   }
 }
 
