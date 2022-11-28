@@ -6,39 +6,21 @@ const { toChainlinkPrice } = require("../../test/shared/chainlink");
 
 
 async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver, overrides) {
-  const { AddressZero, HashZero } = ethers.constants
-  const provider = waffle.provider
-  // const [wallet, minter, tokenManager, mintReceiver] = await hre.ethers.getSigners()
   const depositFee = 50;
   const minExecutionFee = 4000;
-  let vault
-  let timelock
-  let usdg
-  let positionRouter
-  let router
-  let referralStorage
-  let btc
-  let btcPriceFeed
-  let eth
-  let ethPriceFeed
-  let distributor
-  let yieldTracker
-  let fastPriceFeed
-  let fastPriceEvents
-  let shortsTracker
 
-  USDC = overrides?.USDC || await deployContract("Token", [])
-  USDCPriceFeed = await deployContract("PriceFeed", [])
+  let USDC = overrides?.USDC || await deployContract("Token", [])
+  let usdcPriceFeed = overrides?.usdcPriceFeed || await deployContract("PriceFeed", [])
   // await USDC.connect(minter).deposit({ value: expandDecimals(100, 18) })
 
-  btc = overrides?.btc || await deployContract("Token", [])
-  btcPriceFeed = await deployContract("PriceFeed", [])
+  let btc = overrides?.btc || await deployContract("Token", [])
+  let btcPriceFeed = overrides?.btcPriceFeed || await deployContract("PriceFeed", [])
 
-  eth = overrides?.eth || await deployContract("Token", [])
-  ethPriceFeed = await deployContract("PriceFeed", [])
+  let eth = overrides?.eth || await deployContract("Token", [])
+  let ethPriceFeed = overrides?.ethPriceFeed || await deployContract("PriceFeed", [])
 
-  vault = await deployContract("Vault", [])
-  timelock = await deployContract("Timelock", [
+  let vault = await deployContract("Vault", [])
+  let timelock = await deployContract("Timelock", [
     wallet.address,
     5 * 24 * 60 * 60,
     wallet.address,
@@ -49,21 +31,21 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver, o
     500, // maxMarginFeeBasisPoints 5%
   ])
 
-  usdg = await deployContract("USDG", [vault.address])
-  router = await deployContract("Router", [vault.address, usdg.address, USDC.address])
+  let usdg = await deployContract("USDG", [vault.address])
+  let router = await deployContract("Router", [vault.address, usdg.address, USDC.address])
 
-  shortsTracker = await deployContract("ShortsTracker", [vault.address])
+  let shortsTracker = await deployContract("ShortsTracker", [vault.address])
 
-  positionRouter = await deployContract("PositionRouter", [vault.address, router.address, USDC.address, shortsTracker.address, depositFee, minExecutionFee])
-  referralStorage = await deployContract("ReferralStorage", [])
+  let positionRouter = await deployContract("PositionRouter", [vault.address, router.address, USDC.address, shortsTracker.address, depositFee, minExecutionFee])
+  let referralStorage = await deployContract("ReferralStorage", [])
   const vaultPriceFeed = await deployContract("VaultPriceFeed", [])
-  distributor = await deployContract("TimeDistributor", [])
-  yieldTracker = await deployContract("YieldTracker", [usdg.address])
+  let distributor = await deployContract("TimeDistributor", [])
+  let yieldTracker = await deployContract("YieldTracker", [usdg.address])
 
-  reader = await deployContract("Reader", [])
+  let reader = await deployContract("Reader", [])
 
-  fastPriceEvents = await deployContract("FastPriceEvents", [])
-  fastPriceFeed = await deployContract("FastPriceFeed", [
+  let fastPriceEvents = await deployContract("FastPriceEvents", [])
+  let fastPriceFeed = await deployContract("FastPriceFeed", [
     5 * 60, // _priceDuration
     120 * 60, // _maxPriceUpdateDelay
     0, // _minBlockInterval
@@ -90,7 +72,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver, o
     distributor,
     reader,
     vaultPriceFeed,
-    USDCPriceFeed,
+    usdcPriceFeed,
     ethPriceFeed,
     btcPriceFeed,
     fastPriceEvents,
