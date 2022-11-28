@@ -5,7 +5,7 @@ const { initVault, getBnbConfig, getBtcConfig, getDaiConfig } = require("../../t
 const { toChainlinkPrice } = require("../../test/shared/chainlink");
 
 
-async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
+async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver, overrides) {
   const { AddressZero, HashZero } = ethers.constants
   const provider = waffle.provider
   // const [wallet, minter, tokenManager, mintReceiver] = await hre.ethers.getSigners()
@@ -27,14 +27,14 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver) {
   let fastPriceEvents
   let shortsTracker
 
-  USDC = await deployContract("Token", [])
+  USDC = overrides?.USDC || await deployContract("Token", [])
   USDCPriceFeed = await deployContract("PriceFeed", [])
   // await USDC.connect(minter).deposit({ value: expandDecimals(100, 18) })
 
-  btc = await deployContract("Token", [])
+  btc = overrides?.btc || await deployContract("Token", [])
   btcPriceFeed = await deployContract("PriceFeed", [])
 
-  eth = await deployContract("Token", [])
+  eth = overrides?.eth || await deployContract("Token", [])
   ethPriceFeed = await deployContract("PriceFeed", [])
 
   vault = await deployContract("Vault", [])
