@@ -36,7 +36,7 @@ async function deployGMXTestSystem(minter, wallet, tokenManager, mintReceiver, o
 
   let shortsTracker = await deployContract("ShortsTracker", [vault.address])
 
-  let positionRouter = await deployContract("PositionRouter", [vault.address, router.address, USDC.address, shortsTracker.address, depositFee, minExecutionFee])
+  let positionRouter = await deployContract("PositionRouter", [vault.address, router.address, eth.address, shortsTracker.address, depositFee, minExecutionFee])
   let referralStorage = await deployContract("ReferralStorage", [])
   const vaultPriceFeed = await deployContract("VaultPriceFeed", [])
   let distributor = await deployContract("TimeDistributor", [])
